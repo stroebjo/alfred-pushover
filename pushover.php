@@ -52,7 +52,7 @@ if (filter_var($query, FILTER_VALIDATE_URL)) {
 
 			if (!empty($title)) {
 				$params['title']     = $title;
-				$params['url_title'] = $title;
+				$params['url_title'] = substr(parse_url($query, PHP_URL_HOST), 0, 100);
 			}
 		}
 
