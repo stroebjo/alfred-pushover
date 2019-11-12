@@ -17,6 +17,9 @@ $query = trim($_ENV['message']);
  */
 define('PUSHOVER_ATTACHMENT_MAX_SIZE',  2621440);
 
+$PREVIEW_REMOTE = (isset($_ENV['PREVIEW_REMOTE']) ? intval($_ENV['PREVIEW_REMOTE']) : 0);
+$PREVIEW_LOCAL = (isset($_ENV['PREVIEW_LOCAL']) ? intval($_ENV['PREVIEW_LOCAL']) : 0);
+
 $params = array(
 	"token"     => $_ENV['APP_TOKEN'],
 	"user"      => $_ENV['USER_KEY'],
@@ -32,7 +35,7 @@ if (!empty($device)) {
 $temp_pointer = null;
 
 // check if message is an URL and if so get it's <title>
-if (filter_var($query, FILTER_VALIDATE_URL)) {
+if ($PREVIEW_REMOTE === 1 && filter_var($query, FILTER_VALIDATE_URL)) {
 
 	$ch = curl_init();
 
@@ -90,7 +93,7 @@ if (filter_var($query, FILTER_VALIDATE_URL)) {
 	if ($httpcode != 200) {
 		$params['message'] .= "\n\n" . sprintf('The URL returned the status code %s.', $httpcode);
 	}
-} else if (strpos($query, '/') === 0 && @file_exists($query)) {
+} else if ($PREVIEW_LOCAL === 1 && strpos($query, '/') === 0 && @file_exists($query)) {
 	// if the first char of the query is an `/` it *might* by an local path
 	// check with file_exists if it's an actual file
 
