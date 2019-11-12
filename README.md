@@ -5,7 +5,10 @@ This workflow for [Alfred 3](https://www.alfredapp.com/) allows you to send noti
 ![Preview of Pushover workflow](docs/alfred-pushover.png)
 
 The workflow has to keywords `push <text to push>` and `pushc` to push your current clipboard. You can than push it to all your devices or select a sepcific one (see step 4. under Installation).
-If you push an URL the workflow will use the Pushover feature for pushing URLs so it can be directly be opend in the App.
+
+- If you push an URL the workflow will use the Pushover feature for pushing URLs so it can be directly be opend in the App.
+- If the URL points to an image it will send the image also.
+- If you have the path to an local image in your clipboard it will send the image as well.
 
 ## Installation
 
