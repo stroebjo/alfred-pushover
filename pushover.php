@@ -31,19 +31,20 @@ if (filter_var($query, FILTER_VALIDATE_URL)) {
     curl_setopt($ch, CURLOPT_URL, $query);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 
-	$html     = curl_exec($ch);
-	$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
+	$response            = curl_exec($ch);
+	list($header, $body) = explode("\r\n\r\n", $response, 2);
+	$httpcode            = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	$content_type        = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
 	curl_close($ch);
 
 	// set Domain Name as default title.
 	$params['title'] = parse_url($query, PHP_URL_HOST);
 	$params['url']   = $query;
 
-	//parsing begins here:
-	if ($httpcode === 200) {
+	// if Response OK and is HTML, try to get a <title>
+	if ($httpcode === 200 && $content_type === 'text/html') {
 		$doc = new DOMDocument();
-		@$doc->loadHTML($html);
+		@$doc->loadHTML($body);
 		$nodes = $doc->getElementsByTagName('title');
 
 		// check for existing title and if is set
@@ -55,9 +56,10 @@ if (filter_var($query, FILTER_VALIDATE_URL)) {
 				$params['url_title'] = substr(parse_url($query, PHP_URL_HOST), 0, 100);
 			}
 		}
+	}
 
-	} else {
-		// no OK response, show status code
+	// no OK response, show status code
+	if ($httpcode != 200) {
 		$params['message'] .= "\n\n" . sprintf('The URL returned the status code %s.', $httpcode);
 	}
 }
