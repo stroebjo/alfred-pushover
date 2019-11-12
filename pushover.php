@@ -9,6 +9,14 @@ $device = $argv[1];
 // => URL detection would fail.
 $query = trim($_ENV['message']);
 
+/**
+ * Max size for an attachment in bytes.
+ * 
+ * @see https://pushover.net/api#attachments
+ * 
+ */
+define('PUSHOVER_ATTACHMENT_MAX_SIZE',  2621440);
+
 $params = array(
 	"token"     => $_ENV['APP_TOKEN'],
 	"user"      => $_ENV['USER_KEY'],
@@ -20,6 +28,8 @@ $params = array(
 if (!empty($device)) {
 	$params['device'] = $device;
 }
+
+$temp_pointer = null;
 
 // check if message is an URL and if so get it's <title>
 if (filter_var($query, FILTER_VALIDATE_URL)) {
@@ -35,6 +45,7 @@ if (filter_var($query, FILTER_VALIDATE_URL)) {
 	list($header, $body) = explode("\r\n\r\n", $response, 2);
 	$httpcode            = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 	$content_type        = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
+	$content_size        = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
 	curl_close($ch);
 
 	// set Domain Name as default title.
@@ -56,6 +67,21 @@ if (filter_var($query, FILTER_VALIDATE_URL)) {
 				$params['url_title'] = substr(parse_url($query, PHP_URL_HOST), 0, 100);
 			}
 		}
+	}
+
+	// image preview
+	if ($httpcode === 200 && strpos(strtolower($content_type), 'image') === 0 && $content_size <= PUSHOVER_ATTACHMENT_MAX_SIZE) {
+		
+		$filename = basename(parse_url($query, PHP_URL_PATH));
+
+		$temp_pointer = tmpfile(); 
+		$metaDatas = stream_get_meta_data($temp_pointer);
+		$tmpFilename = $metaDatas['uri'];
+		fwrite($temp_pointer, $body); 
+
+		$params['attachment'] = new CurlFile($tmpFilename, $content_type, $filename);
+
+		// tmpfile gets closed after curl_exec, so CurlFile can read it
 	}
 
 	// no OK response, show status code
@@ -80,6 +106,11 @@ if (false === $success) {
 	echo $error;
 }
 curl_close($ch);
+
+// remove tmp file for image attachment AFTER curl_exec
+if (!is_null($temp_pointer)) {
+	fclose($temp_pointer);
+}
 
 // check for pushover errors
 $response = json_decode($success);
