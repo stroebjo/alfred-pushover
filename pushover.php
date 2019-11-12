@@ -82,11 +82,26 @@ if (filter_var($query, FILTER_VALIDATE_URL)) {
 		$params['attachment'] = new CurlFile($tmpFilename, $content_type, $filename);
 
 		// tmpfile gets closed after curl_exec, so CurlFile can read it
+	} else {
+		$params['message'] .= "\n\n" . sprintf('The image was to large (%d bytes, max. is %s bytes).', number_format($content_size), number_format(PUSHOVER_ATTACHMENT_MAX_SIZE));
 	}
 
 	// no OK response, show status code
 	if ($httpcode != 200) {
 		$params['message'] .= "\n\n" . sprintf('The URL returned the status code %s.', $httpcode);
+	}
+} else if (strpos($query, '/') === 0 && @file_exists($query)) {
+	// if the first char of the query is an `/` it *might* by an local path
+	// check with file_exists if it's an actual file
+
+	$content_type = mime_content_type($query);
+	$filename = basename($query);
+	$filesize = filesize($query);
+
+	if(strpos(strtolower($content_type), 'image') === 0 && $filesize <= PUSHOVER_ATTACHMENT_MAX_SIZE) {
+		$params['attachment'] = new CurlFile($query, $content_type, $filename);
+	} else {
+		$params['message'] .= "\n\n" . sprintf('The image was to large (%s bytes, max. is %s bytes).',  number_format($filesize), number_format(PUSHOVER_ATTACHMENT_MAX_SIZE));
 	}
 }
 
