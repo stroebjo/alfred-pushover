@@ -70,23 +70,22 @@ if ($PREVIEW_REMOTE === 1 && filter_var($query, FILTER_VALIDATE_URL)) {
 				$params['url_title'] = substr(parse_url($query, PHP_URL_HOST), 0, 100);
 			}
 		}
-	}
+	} else if ($httpcode === 200 && strpos(strtolower($content_type), 'image') === 0) {
+		// image preview
+		if ($content_size <= PUSHOVER_ATTACHMENT_MAX_SIZE) {
+			$filename = basename(parse_url($query, PHP_URL_PATH));
 
-	// image preview
-	if ($httpcode === 200 && strpos(strtolower($content_type), 'image') === 0 && $content_size <= PUSHOVER_ATTACHMENT_MAX_SIZE) {
-		
-		$filename = basename(parse_url($query, PHP_URL_PATH));
+			$temp_pointer = tmpfile(); 
+			$metaDatas = stream_get_meta_data($temp_pointer);
+			$tmpFilename = $metaDatas['uri'];
+			fwrite($temp_pointer, $body); 
 
-		$temp_pointer = tmpfile(); 
-		$metaDatas = stream_get_meta_data($temp_pointer);
-		$tmpFilename = $metaDatas['uri'];
-		fwrite($temp_pointer, $body); 
+			$params['attachment'] = new CurlFile($tmpFilename, $content_type, $filename);
 
-		$params['attachment'] = new CurlFile($tmpFilename, $content_type, $filename);
-
-		// tmpfile gets closed after curl_exec, so CurlFile can read it
-	} else {
-		$params['message'] .= "\n\n" . sprintf('The image was to large (%d bytes, max. is %s bytes).', number_format($content_size), number_format(PUSHOVER_ATTACHMENT_MAX_SIZE));
+			// tmpfile gets closed after curl_exec, so CurlFile can read it
+		} else {
+			$params['message'] .= "\n\n" . sprintf('The image was to large (%d bytes, max. is %s bytes).', number_format($content_size), number_format(PUSHOVER_ATTACHMENT_MAX_SIZE));
+		}
 	}
 
 	// no OK response, show status code
