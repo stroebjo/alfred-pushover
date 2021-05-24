@@ -8,7 +8,20 @@
 	<string>Productivity</string>
 	<key>connections</key>
 	<dict>
-		<key>0773F5CA-733B-4CD4-BC3A-6608D0231D11</key>
+		<key>4CAE3596-46D2-48AB-8E10-D6421B1CC0B6</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>FDA504C9-FE69-4A1F-A133-7CC2D7292D4D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>581F00E9-B5DB-43A8-8BA5-EE1FCDF5DE93</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
@@ -17,28 +30,14 @@
 				<integer>0</integer>
 				<key>modifiersubtext</key>
 				<string></string>
+				<key>sourceoutputuid</key>
+				<string>198B003D-E3BC-4BED-A545-04D8D131EC03</string>
 				<key>vitoclose</key>
 				<false/>
 			</dict>
-		</array>
-		<key>440B1445-C3ED-4239-B71A-03A5FFEFB67C</key>
-		<array>
 			<dict>
 				<key>destinationuid</key>
 				<string>EA8A3C6A-35A5-4451-82B0-1F1A008CB9BB</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
-		<key>4CAE3596-46D2-48AB-8E10-D6421B1CC0B6</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>FDA504C9-FE69-4A1F-A133-7CC2D7292D4D</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -103,17 +102,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>0773F5CA-733B-4CD4-BC3A-6608D0231D11</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-			<dict>
-				<key>destinationuid</key>
-				<string>440B1445-C3ED-4239-B71A-03A5FFEFB67C</string>
+				<string>581F00E9-B5DB-43A8-8BA5-EE1FCDF5DE93</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -180,25 +169,6 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>inputstring</key>
-				<string>{var:devices}</string>
-				<key>matchcasesensitive</key>
-				<true/>
-				<key>matchmode</key>
-				<integer>0</integer>
-				<key>matchstring</key>
-				<string></string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.filter</string>
-			<key>uid</key>
-			<string>0773F5CA-733B-4CD4-BC3A-6608D0231D11</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>argumenttype</key>
 				<integer>0</integer>
 				<key>keyword</key>
@@ -220,8 +190,40 @@
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>conditions</key>
+				<array>
+					<dict>
+						<key>inputstring</key>
+						<string>{var:devices}</string>
+						<key>matchcasesensitive</key>
+						<true/>
+						<key>matchmode</key>
+						<integer>0</integer>
+						<key>matchstring</key>
+						<string></string>
+						<key>outputlabel</key>
+						<string>send to all devices</string>
+						<key>uid</key>
+						<string>198B003D-E3BC-4BED-A545-04D8D131EC03</string>
+					</dict>
+				</array>
+				<key>elselabel</key>
+				<string>else</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.conditional</string>
+			<key>uid</key>
+			<string>581F00E9-B5DB-43A8-8BA5-EE1FCDF5DE93</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>argument</key>
 				<string></string>
+				<key>passthroughargument</key>
+				<false/>
 				<key>variables</key>
 				<dict>
 					<key>message</key>
@@ -234,53 +236,6 @@
 			<string>FDA504C9-FE69-4A1F-A133-7CC2D7292D4D</string>
 			<key>version</key>
 			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>alfredfiltersresults</key>
-				<false/>
-				<key>alfredfiltersresultsmatchmode</key>
-				<integer>0</integer>
-				<key>argumenttreatemptyqueryasnil</key>
-				<false/>
-				<key>argumenttrimmode</key>
-				<integer>0</integer>
-				<key>argumenttype</key>
-				<integer>1</integer>
-				<key>escaping</key>
-				<integer>100</integer>
-				<key>queuedelaycustom</key>
-				<integer>3</integer>
-				<key>queuedelayimmediatelyinitially</key>
-				<true/>
-				<key>queuedelaymode</key>
-				<integer>0</integer>
-				<key>queuemode</key>
-				<integer>1</integer>
-				<key>runningsubtext</key>
-				<string>Fetching your devices…</string>
-				<key>script</key>
-				<string>php -f select.php "{query}"</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>subtext</key>
-				<string>Send the entered text to your Pushover devices</string>
-				<key>title</key>
-				<string>Select device</string>
-				<key>type</key>
-				<integer>0</integer>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.scriptfilter</string>
-			<key>uid</key>
-			<string>EA8A3C6A-35A5-4451-82B0-1F1A008CB9BB</string>
-			<key>version</key>
-			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -331,21 +286,49 @@ end run</string>
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>inputstring</key>
-				<string>{var:devices}</string>
-				<key>matchcasesensitive</key>
-				<true/>
-				<key>matchmode</key>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
 				<integer>1</integer>
-				<key>matchstring</key>
+				<key>escaping</key>
+				<integer>100</integer>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Fetching your devices…</string>
+				<key>script</key>
+				<string>php -f select.php "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
 				<string></string>
+				<key>subtext</key>
+				<string>Send the entered text to your Pushover devices</string>
+				<key>title</key>
+				<string>Select device</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.utility.filter</string>
+			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>440B1445-C3ED-4239-B71A-03A5FFEFB67C</string>
+			<string>EA8A3C6A-35A5-4451-82B0-1F1A008CB9BB</string>
 			<key>version</key>
-			<integer>1</integer>
+			<integer>3</integer>
 		</dict>
 	</array>
 	<key>readme</key>
@@ -373,28 +356,12 @@ If set to `1` will check if the submitted query is a URL and do a request to it 
 If set to `1` will check if the submitted query is a valid local file and if it's an image, it will send it to Pushover as an attachment (see https://pushover.net/api#attachments).</string>
 	<key>uidata</key>
 	<dict>
-		<key>0773F5CA-733B-4CD4-BC3A-6608D0231D11</key>
-		<dict>
-			<key>xpos</key>
-			<integer>470</integer>
-			<key>ypos</key>
-			<integer>160</integer>
-		</dict>
 		<key>2BB54600-B4AB-494C-90FF-70753A1D5566</key>
 		<dict>
 			<key>xpos</key>
-			<integer>890</integer>
+			<integer>905</integer>
 			<key>ypos</key>
-			<integer>130</integer>
-		</dict>
-		<key>440B1445-C3ED-4239-B71A-03A5FFEFB67C</key>
-		<dict>
-			<key>note</key>
-			<string>If the user populated the global `devices` variable, let him chose.</string>
-			<key>xpos</key>
-			<integer>470</integer>
-			<key>ypos</key>
-			<integer>330</integer>
+			<integer>120</integer>
 		</dict>
 		<key>4CAE3596-46D2-48AB-8E10-D6421B1CC0B6</key>
 		<dict>
@@ -402,6 +369,13 @@ If set to `1` will check if the submitted query is a valid local file and if it'
 			<integer>60</integer>
 			<key>ypos</key>
 			<integer>190</integer>
+		</dict>
+		<key>581F00E9-B5DB-43A8-8BA5-EE1FCDF5DE93</key>
+		<dict>
+			<key>xpos</key>
+			<integer>440</integer>
+			<key>ypos</key>
+			<integer>210</integer>
 		</dict>
 		<key>5BFEC2C6-04CE-40AE-98C2-621A9ECEF6FC</key>
 		<dict>
@@ -413,16 +387,16 @@ If set to `1` will check if the submitted query is a valid local file and if it'
 		<key>72A63135-07D5-4371-8D55-B13528F1C2D0</key>
 		<dict>
 			<key>xpos</key>
-			<integer>740</integer>
+			<integer>735</integer>
 			<key>ypos</key>
-			<integer>130</integer>
+			<integer>120</integer>
 		</dict>
 		<key>EA8A3C6A-35A5-4451-82B0-1F1A008CB9BB</key>
 		<dict>
 			<key>xpos</key>
-			<integer>570</integer>
+			<integer>580</integer>
 			<key>ypos</key>
-			<integer>300</integer>
+			<integer>350</integer>
 		</dict>
 		<key>FBDD0BD4-E336-4DE7-99C4-611868218099</key>
 		<dict>
@@ -459,7 +433,7 @@ If set to `1` will check if the submitted query is a valid local file and if it'
 		<string>USER_KEY</string>
 	</array>
 	<key>version</key>
-	<string>1.1.0</string>
+	<string>1.1.1</string>
 	<key>webaddress</key>
 	<string>http://jonathanstroebele.de</string>
 </dict>
