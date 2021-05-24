@@ -4,8 +4,8 @@ error_reporting(E_ALL);
 // the device may, or may not be set in argv[1]
 $device = $argv[1];
 
-// the actual message is set prio into an variable.
-// trim() it to remove potential linebreaks from clipboard
+// the actual message is set prior into an variable.
+// trim() it to remove potential line breaks from clipboard
 // => URL detection would fail.
 $query = trim($_ENV['message']);
 
