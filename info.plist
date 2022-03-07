@@ -84,6 +84,16 @@
 				<key>vitoclose</key>
 				<false/>
 			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>3CDD977D-FE3F-4760-8D67-BE2C0F567165</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
 		</array>
 		<key>FBDD0BD4-E336-4DE7-99C4-611868218099</key>
 		<array>
@@ -130,9 +140,9 @@
 				<key>escaping</key>
 				<integer>100</integer>
 				<key>script</key>
-				<string>php -f pushover.php "{query}"</string>
+				<string>/opt/homebrew/bin/php -f pushover.php "{query}"</string>
 				<key>scriptargtype</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>scriptfile</key>
 				<string></string>
 				<key>type</key>
@@ -286,6 +296,23 @@ end run</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>argument</key>
+				<string>'{query}', {allvars}</string>
+				<key>cleardebuggertext</key>
+				<false/>
+				<key>processoutputs</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.debug</string>
+			<key>uid</key>
+			<string>3CDD977D-FE3F-4760-8D67-BE2C0F567165</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
@@ -309,9 +336,9 @@ end run</string>
 				<key>runningsubtext</key>
 				<string>Fetching your devices…</string>
 				<key>script</key>
-				<string>php -f select.php "{query}"</string>
+				<string>/opt/homebrew/bin/php -f select.php "{query}"</string>
 				<key>scriptargtype</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
@@ -319,7 +346,7 @@ end run</string>
 				<key>title</key>
 				<string>Select device</string>
 				<key>type</key>
-				<integer>0</integer>
+				<integer>5</integer>
 				<key>withspace</key>
 				<true/>
 			</dict>
@@ -362,6 +389,13 @@ If set to `1` will check if the submitted query is a valid local file and if it'
 			<integer>905</integer>
 			<key>ypos</key>
 			<integer>120</integer>
+		</dict>
+		<key>3CDD977D-FE3F-4760-8D67-BE2C0F567165</key>
+		<dict>
+			<key>xpos</key>
+			<integer>790</integer>
+			<key>ypos</key>
+			<integer>335</integer>
 		</dict>
 		<key>4CAE3596-46D2-48AB-8E10-D6421B1CC0B6</key>
 		<dict>
@@ -433,7 +467,7 @@ If set to `1` will check if the submitted query is a valid local file and if it'
 		<string>USER_KEY</string>
 	</array>
 	<key>version</key>
-	<string>1.1.1</string>
+	<string>1.1.2</string>
 	<key>webaddress</key>
 	<string>http://jonathanstroebele.de</string>
 </dict>
