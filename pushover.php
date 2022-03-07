@@ -7,7 +7,7 @@ $device = $argv[1];
 // the actual message is set prior into an variable.
 // trim() it to remove potential line breaks from clipboard
 // => URL detection would fail.
-$query = trim($_ENV['message']);
+$query = trim(getenv('message'));
 
 /**
  * Max size for an attachment in bytes.
@@ -17,12 +17,14 @@ $query = trim($_ENV['message']);
  */
 define('PUSHOVER_ATTACHMENT_MAX_SIZE',  2621440);
 
-$PREVIEW_REMOTE = (isset($_ENV['PREVIEW_REMOTE']) ? intval($_ENV['PREVIEW_REMOTE']) : 0);
-$PREVIEW_LOCAL = (isset($_ENV['PREVIEW_LOCAL']) ? intval($_ENV['PREVIEW_LOCAL']) : 0);
+
+
+$PREVIEW_REMOTE = (getenv('PREVIEW_REMOTE') !== false ? intval(getenv('PREVIEW_REMOTE')) : 0);
+$PREVIEW_LOCAL = (getenv('PREVIEW_LOCAL') !== false ? intval(getenv('PREVIEW_LOCAL')) : 0);
 
 $params = array(
-	"token"     => $_ENV['APP_TOKEN'],
-	"user"      => $_ENV['USER_KEY'],
+	"token"     => getenv('APP_TOKEN'),
+	"user"      => getenv('USER_KEY'),
 	'timestamp' => time(),
 
 	'message'   => $query,
